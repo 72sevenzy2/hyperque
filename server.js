@@ -48,7 +48,6 @@ const server = https.createServer(options, (req, res) => {
                 return;
             }
 
-            if (!) {}
         });
     }
 });

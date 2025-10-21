@@ -1,3 +1,5 @@
 # aaa
 
 certificate/
+node_modules/
+.env

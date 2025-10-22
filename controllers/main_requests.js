@@ -19,7 +19,7 @@ export function handle_requests(req, res) {
                 const { playerId, gameId, queueType = "default",
                     matchSize = 4, color1 = "red", color2 = "blue" } = JSON.parse(body);
 
-                if (!playerId && !gameId) {
+                if (!playerId && !gameId && !queueType && !matchSize && !color1 && !color2) {
                     res.writeHead(401, { "content-type": "application/json" });
                     res.end(JSON.stringify({ message: "missing fields" }));
                     return;

@@ -2,9 +2,9 @@
 
 import https from "https";
 import fs from "fs";
-import { handle_unknown_requests } from "./controllers/unknown_requests";
+import { handle_unknown_requests } from "./controllers/unknown_requests.js";
 import dotenv from "dotenv";
-import { handle_requests } from "./controllers/main_requests";
+import { handle_requests } from "./controllers/main_requests.js";
 // necessary imports and controllers ^^
 
 dotenv.config();

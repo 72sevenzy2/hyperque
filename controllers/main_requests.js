@@ -1,6 +1,6 @@
-import { assign } from "./assign_teams";
+import { assign } from "./assign_teams.js";
 import { v4 as uuidv4 } from "uuid";
-import { games } from "./temp-db/temp-database";
+import { games } from "./temp-db/temp-database.js";
 
 // necessary imports ^^
 

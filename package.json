@@ -1,13 +1,13 @@
 {
   "dependencies": {
     "dotenv": "^17.2.3",
+    "mysql2": "^3.15.3",
     "uuid": "^13.0.0"
   },
   "name": "hyperque",
   "version": "1.0.0",
   "description": "HyperQue is a tool specifically aimed at roblox game developers to be able to make implementing cross-server matchmaking basically effortless, it requires almost 0 knowledge in backend development and all they have to do is focus on the luau scripting side of things.",
   "main": "server.js",
-  "devDependencies": {},
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js"

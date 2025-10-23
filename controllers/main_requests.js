@@ -14,7 +14,7 @@ export function handle_requests(req, res) {
                 body += chunk.toString();
             });
 
-            req.on("end", () => {
+            req.on("end", async () => {
                 try {
                     // extracting the data that is supposed to be passed in
                     const { playerId, gameId, queueType = "default",
@@ -33,31 +33,31 @@ export function handle_requests(req, res) {
                         return;
                     }
                     // create a game instance
-                    if (!games[gameId]) { games[gameId] = {}; }
+                    await db.query("INSERT iGNORE INTO games (id, name) VALUES (?, ?)", [gameId, gameId]);
 
-                    // create  game and queuetype instance
-                    if (!games[gameId][queueType]) { games[gameId][queueType] = { queue: [], matches: {} }; }
+                    await db.query("INSERT INTO queues (game_id, queue_type, player_id) VALUES (?, ?, ?)",
+                        [gameId, queueType, playerId]);
 
-                    const gamequeue = games[gameId][queueType].queue;
-                    const gamematches = games[gameId][queueType].matches;
-
-                    // adding (of each game) a individual player to the queue
-                    gamequeue.push(playerId);
+                    const [rows] = await db.query("SELECT * FROM queues WHERE game_id = ? AND queue_type = ? AND status = queued",
+                        [gameId, queueType]);
 
                     // checking if the queue has enough players
-                    if (gamequeue.length >= matchSize) {
-                        const matchplayers = gamequeue.splice(0, matchSize);
+                    if (rows.length >= matchSize) {
+                        const matchplayers = rows.splice(0, matchSize).map(r => r.player_id);
                         const matchId = uuidv4();
                         const teams = assign(matchplayers, color1, color2, res);
 
-                        // match
+                        // save match
+                        await db.query("INSERT INTO matches (id, game_id, players, teams, status) VALUES (?, ?, ?, ?, ?)",
+                            [matchId, gameId, JSON.stringify(matchplayers), JSON.stringify(teams), "waiting.."]);
 
-                        const match = { players: matchplayers, teams, status: "waiting" };
-                        gamematches[matchId] = match;
+                        // mark as already matched
+
+                        await db.query("UPDATE queues SET status = 'matched' WHERE player_id IN (?)", [matchplayers]);
 
                         // for debugging
                         console.log("match created");
-                        return res.end(JSON.stringify({ matchId, ...match }));
+                        return res.end(JSON.stringify({ matchId, players: matchplayers, teams}));
                     }
                     return res.end(JSON.stringify({ status: "queued", queueLength: gamequeue.length }));
                 } catch (error) {

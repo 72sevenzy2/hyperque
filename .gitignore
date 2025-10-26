@@ -1,5 +1,6 @@
-# aaa
+# 72
 
 certificate/
+# hiding certificate because its only used for local development purposes
 node_modules/
 .env

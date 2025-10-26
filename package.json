@@ -5,7 +5,7 @@
     "uuid": "^13.0.0"
   },
   "name": "hyperque",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "HyperQue is a tool specifically aimed at roblox game developers to be able to make implementing cross-server matchmaking basically effortless, it requires almost 0 knowledge in backend development and all they have to do is focus on the luau scripting side of things.",
   "keywords": ["roblox", "cross-server", "matchmaking", "tools", "backend"],
   "main": "server.js",

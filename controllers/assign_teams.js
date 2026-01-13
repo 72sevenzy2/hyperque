@@ -1,5 +1,5 @@
 export function assign(players, teamcol1, teamcol2, res) {
-    // check if the team colors are strings
+    // check if the team colors are the appropriate datatype
     if (typeof teamcol1 === "string" && typeof teamcol2 === "string") {
         const teams = {};
 
